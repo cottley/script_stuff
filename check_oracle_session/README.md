@@ -32,3 +32,27 @@ OPTIONS:
     Verbose output. Note: This will send an email even if the limit has not
     been met or exceeded
 </pre>
+
+An example invocation that is checking if the session limit has met or exceeded 50 sessions, using the SMTP server mail.mycompany.com, with the email coming from noreply@mycompany.com and the email being sent to me@mycompany.com:
+<pre>
+./check_oracle_session.sh -l 50 -s mail.mycompany.com -f noreply@mycompany.com -t me@mycompany.com
+</pre>
+
+This script assumes that the oracle environment has been setup so that you can use sqlplus at a command prompt and connect as the system DBA.
+
+In my environment, I also have a seperate oracle.bash file that I source to set the ORACLE_SID, the TNS_ADMIN home etc. You may or may not have a similar configuration, however whatever steps you need to get sqlplus working at a command prompt, that's what you need to do to test sqlplus.
+
+<pre>
+[oracle@mydatabase ~]$ sqlplus / as sysdba
+
+SQL*Plus: Release 12.1.0.2.0 Production on Tue Oct 2 10:52:36 2018
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+
+SQL>
+</pre>
