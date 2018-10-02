@@ -56,3 +56,35 @@ With the Partitioning, OLAP, Advanced Analytics and Real Application Testing opt
 
 SQL>
 </pre>
+
+We can easily test our script to ensure the notifications work by asking it to send an email with a low limit, like 0.
+
+<pre>
+./check_oracle_session.sh -l 0 -s mail.mycompany.com -f noreply@mycompany.com -t me@mycompany.com
+</pre>
+
+Once that works, we can now schedule the script to run every 5 minutes via cron. 
+
+In the crontab we change to the oracle user (su - oracle) and execute the command (-c) in double quotes. 
+
+<pre>
+*/5 * * * * su - oracle -c "/home/oracle/check_oracle_session.sh -l 50 -s mail.mycompany.com -f noreply@mycompany.com -t me@mycompany.com"
+</pre>
+
+We can also track the individual runs of the script by looking at the /var/log/check_oracle_session.log.
+
+<pre>
+[root@mydatabase ~]# tail -f /var/log/check_oracle_session.log
+2018-10-02T12:05:01-0500 Limit is: 50 and No. Of Sessions is: 48
+2018-10-02T12:10:01-0500 Limit is: 50 and No. Of Sessions is: 50
+2018-10-02T12:15:01-0500 Limit is: 50 and No. Of Sessions is: 50
+2018-10-02T12:20:01-0500 Limit is: 50 and No. Of Sessions is: 49
+2018-10-02T12:25:01-0500 Limit is: 50 and No. Of Sessions is: 48
+2018-10-02T12:30:01-0500 Limit is: 50 and No. Of Sessions is: 48
+2018-10-02T12:35:01-0500 Limit is: 50 and No. Of Sessions is: 48
+2018-10-02T12:40:02-0500 Limit is: 50 and No. Of Sessions is: 48
+2018-10-02T12:45:01-0500 Limit is: 50 and No. Of Sessions is: 48
+2018-10-02T12:50:01-0500 Limit is: 50 and No. Of Sessions is: 48
+</pre>
+
+
